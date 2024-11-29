@@ -1,6 +1,11 @@
 import { Select, Text } from '@mantine/core';
 import { useMemo } from 'react';
-import { DataGridFilterElementProps, DataGridFilterFn, DataGridFilterOperator, DataGridFilterState } from './types';
+import type {
+  DataGridFilterElementProps,
+  DataGridFilterFn,
+  DataGridFilterOperator,
+  DataGridFilterState,
+} from './types';
 
 export type OperatorFilterOptions<TRowValue, TFilterValue> = {
   title?: string;

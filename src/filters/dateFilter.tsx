@@ -1,10 +1,10 @@
 import { DatePickerInput } from '@mantine/dates';
 import { IconFilter } from '@tabler/icons-react';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs, { type Dayjs } from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
-import { createOperatorFilter, OperatorFilterOptions } from './createOperatorFilter';
-import { DataGridFilterInput, DataGridFilterOperator } from './types';
+import { type OperatorFilterOptions, createOperatorFilter } from './createOperatorFilter';
+import type { DataGridFilterInput, DataGridFilterOperator } from './types';
 
 // eslint-disable-next-line import/no-named-as-default-member
 const { extend } = dayjs;
@@ -19,7 +19,7 @@ function parseDate(value: string | null) {
   const date = dayjs(value);
   return date.isValid() ? date.toDate() : null;
 }
-function toString(value: Date | null): string | null {
+function toISOString(value: Date | null): string | null {
   return value?.toISOString() || null;
 }
 
@@ -36,17 +36,27 @@ function combineTimeAndDate(time: Date | null, date: Date | null) {
   return dateAndTime.toDate();
 }
 
-export function createDateFilterInput(withTime = false): DataGridFilterInput<DateValue> {
+export function createDateFilterInput({
+  withTime = false,
+  format = 'DD/MM/YYYY',
+  placeholder = '',
+}: {
+  withTime: boolean;
+  format?: string;
+  placeholder?: string;
+}): DataGridFilterInput<DateValue> {
   return function DateFilterInput({ value, onChange, ...rest }) {
     if (Array.isArray(value)) {
       return (
         <>
           <DatePickerInput
             type="range"
-            {...rest}
+            valueFormat={format}
+            placeholder={placeholder}
             value={[parseDate(value[0]), parseDate(value[1])]}
-            onChange={(value) => onChange([toString(value[0]), toString(value[1])])}
+            onChange={(value) => onChange([toISOString(value[0]), toISOString(value[1])])}
             rightSection={<IconFilter size={20} />}
+            {...rest}
           />
           {/*withTime && (
             <TimeRangeInput
@@ -58,16 +68,18 @@ export function createDateFilterInput(withTime = false): DataGridFilterInput<Dat
             )*/}
         </>
       );
-    } else {
-      return (
-        <>
-          <DatePickerInput
-            {...rest}
-            value={parseDate(value)}
-            onChange={(value) => onChange(toString(value))}
-            rightSection={<IconFilter size={20} />}
-          />
-          {/*withTime && (
+    }
+    return (
+      <>
+        <DatePickerInput
+          valueFormat={format}
+          placeholder={placeholder}
+          value={parseDate(value)}
+          onChange={(value) => onChange(toISOString(value))}
+          rightSection={<IconFilter size={20} />}
+          {...rest}
+        />
+        {/*withTime && (
             <TimeInput
               value={filterValue}
               onChange={(value) =>
@@ -75,9 +87,8 @@ export function createDateFilterInput(withTime = false): DataGridFilterInput<Dat
               }
             />
             )*/}
-        </>
-      );
-    }
+      </>
+    );
   };
 }
 
@@ -86,21 +97,21 @@ export const dateOperators = {
     op: 'eq',
     label,
     filterFn: (rowValue, filterValue) => dayjs(rowValue).isSame(getLeftValue(filterValue), withTime ? 'minute' : 'day'),
-    element: createDateFilterInput(withTime),
+    element: createDateFilterInput({ withTime }),
   }),
   notEquals: (label = 'not equals', withTime = false): DataGridFilterOperator<string | Date | Dayjs, DateValue> => ({
     op: 'neq',
     label,
     filterFn: (rowValue, filterValue) =>
       !dayjs(rowValue).isSame(getLeftValue(filterValue), withTime ? 'minute' : 'day'),
-    element: createDateFilterInput(withTime),
+    element: createDateFilterInput({ withTime }),
   }),
   greaterThan: (label = 'GreaterThan', withTime = false): DataGridFilterOperator<string | Date | Dayjs, DateValue> => ({
     op: 'gt',
     label,
     filterFn: (rowValue, filterValue) =>
       dayjs(rowValue).isAfter(getLeftValue(filterValue), withTime ? 'minute' : 'day'),
-    element: createDateFilterInput(withTime),
+    element: createDateFilterInput({ withTime }),
   }),
   greaterThanOrEquals: (
     label = 'GreaterThanOrEquals',
@@ -110,14 +121,14 @@ export const dateOperators = {
     label,
     filterFn: (rowValue, filterValue) =>
       dayjs(rowValue).isSameOrAfter(getLeftValue(filterValue), withTime ? 'minute' : 'day'),
-    element: createDateFilterInput(withTime),
+    element: createDateFilterInput({ withTime }),
   }),
   lowerThan: (label = 'LowerThan', withTime = false): DataGridFilterOperator<string | Date | Dayjs, DateValue> => ({
     op: 'lt',
     label,
     filterFn: (rowValue, filterValue) =>
       dayjs(rowValue).isBefore(getLeftValue(filterValue), withTime ? 'minute' : 'day'),
-    element: createDateFilterInput(withTime),
+    element: createDateFilterInput({ withTime }),
   }),
   lowerThanOrEquals: (
     label = 'LowerThanOrEquals',
@@ -127,7 +138,7 @@ export const dateOperators = {
     label,
     filterFn: (rowValue, filterValue) =>
       dayjs(rowValue).isSameOrBefore(getLeftValue(filterValue), withTime ? 'minute' : 'day'),
-    element: createDateFilterInput(withTime),
+    element: createDateFilterInput({ withTime }),
   }),
   range: (label = 'Range', withTime = false): DataGridFilterOperator<string | Date | Dayjs, DateValue> => ({
     op: 'range',
@@ -139,16 +150,15 @@ export const dateOperators = {
         rowDate.isSameOrBefore(getRightValue(filterValue), withTime ? 'minute' : 'day')
       );
     },
-    element: createDateFilterInput(withTime),
+    element: createDateFilterInput({ withTime }),
   }),
 };
 
 export const initDateFilterValue = (op: string, last?: DateValue): DateValue => {
   if (op === 'range') {
     return last && Array.isArray(last) ? last : [null, null];
-  } else {
-    return last && !Array.isArray(last) ? last : null;
   }
+  return last && !Array.isArray(last) ? last : null;
 };
 
 export function createDateFilter(options?: Partial<OperatorFilterOptions<string | Date | Dayjs, DateValue>>) {

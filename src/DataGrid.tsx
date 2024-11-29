@@ -184,13 +184,13 @@ export function DataGrid<TData extends RowData>({
       handler?: (value: TableState[T]) => void
     ): OnChangeFn<TableState[T]> {
       return (arg0) => {
-        if (state && state[key]) {
+        if (state?.[key]) {
           const next = functionalUpdate(arg0, state[key]);
-          handler && handler(next);
+          handler?.(next);
         } else {
           table.setState((state) => {
             const next = functionalUpdate(arg0, state[key]);
-            handler && handler(next);
+            handler?.(next);
             return {
               ...state,
               [key]: next,
@@ -327,7 +327,9 @@ export function DataGrid<TData extends RowData>({
                         </div>
                         {header.column.getCanResize() && (
                           <div
-                            className={cx(classes.resizer, { [classes.isResizing]: header.column.getIsResizing() })}
+                            className={cx(classes.resizer, {
+                              [classes.isResizing]: header.column.getIsResizing(),
+                            })}
                             onClick={(e) => e.stopPropagation()}
                             onMouseDown={header.getResizeHandler()}
                             onTouchStart={header.getResizeHandler()}

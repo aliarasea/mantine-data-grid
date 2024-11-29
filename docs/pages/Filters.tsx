@@ -17,7 +17,9 @@ export default function Filters() {
             </Card.Section>
             <Title order={4}>Options</Title>
             <PropertyTable items={filter.options} />
-            <Prism withLineNumbers language="tsx" children={filter.example} />
+            <Prism withLineNumbers language="tsx">
+              {filter.example}
+            </Prism>
           </Stack>
         </Card>
       ))}
@@ -29,9 +31,21 @@ const filters = [
   {
     title: 'String filter',
     options: [
-      { name: 'title', type: 'string', description: 'Title in filter dropdown' },
-      { name: 'operators', type: 'FilterOperator[]', description: 'Filter operators' },
-      { name: 'placeholder', type: 'string', description: 'Placeholder in input element, defaults to "Filter value"' },
+      {
+        name: 'title',
+        type: 'string',
+        description: 'Title in filter dropdown',
+      },
+      {
+        name: 'operators',
+        type: 'FilterOperator[]',
+        description: 'Filter operators',
+      },
+      {
+        name: 'placeholder',
+        type: 'string',
+        description: 'Placeholder in input element, defaults to "Filter value"',
+      },
     ],
     example: `
 import { createStringFilter } from 'mantine-data-grid';
@@ -53,9 +67,21 @@ const stringFilter = createStringFilter({
   {
     title: 'Number filter',
     options: [
-      { name: 'title', type: 'string', description: 'Title in filter dropdown' },
-      { name: 'operators', type: 'FilterOperator[]', description: 'Filter operators' },
-      { name: 'placeholder', type: 'string', description: 'Placeholder in input element, defaults to "Filter value"' },
+      {
+        name: 'title',
+        type: 'string',
+        description: 'Title in filter dropdown',
+      },
+      {
+        name: 'operators',
+        type: 'FilterOperator[]',
+        description: 'Filter operators',
+      },
+      {
+        name: 'placeholder',
+        type: 'string',
+        description: 'Placeholder in input element, defaults to "Filter value"',
+      },
     ],
     example: `
 import { createNumberFilter } from 'mantine-data-grid';
@@ -81,9 +107,21 @@ const numberFilter = createNumberFilter({
   {
     title: 'Date filter',
     options: [
-      { name: 'title', type: 'string', description: 'Title in filter dropdown' },
-      { name: 'operators', type: 'FilterOperator[]', description: 'Filter operators' },
-      { name: 'placeholder', type: 'string', description: 'Placeholder in input element, defaults to "Filter value"' },
+      {
+        name: 'title',
+        type: 'string',
+        description: 'Title in filter dropdown',
+      },
+      {
+        name: 'operators',
+        type: 'FilterOperator[]',
+        description: 'Filter operators',
+      },
+      {
+        name: 'placeholder',
+        type: 'string',
+        description: 'Placeholder in input element, defaults to "Filter value"',
+      },
     ],
     example: `
 import { createDateFilter } from 'mantine-data-grid';
@@ -100,8 +138,16 @@ const dateFilter = createDateFilter({
   {
     title: 'Boolean filter',
     options: [
-      { name: 'title', type: 'string', description: 'Title in filter dropdown' },
-      { name: 'variant', type: "'segmented' | 'radio'", description: "Input variant, defaults to 'segmented'" },
+      {
+        name: 'title',
+        type: 'string',
+        description: 'Title in filter dropdown',
+      },
+      {
+        name: 'variant',
+        type: "'segmented' | 'radio'",
+        description: "Input variant, defaults to 'segmented'",
+      },
       { name: 'trueLabel', type: 'string', description: 'true label' },
       { name: 'falseLabel', type: 'string', description: 'false label' },
     ],

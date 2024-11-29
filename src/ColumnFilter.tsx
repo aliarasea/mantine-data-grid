@@ -1,9 +1,9 @@
 import { ActionIcon, Button, Group, Menu, Stack } from '@mantine/core';
 import { useSetState } from '@mantine/hooks';
 import { IconCheck, IconFilter, IconX } from '@tabler/icons-react';
-import { Column } from '@tanstack/react-table';
+import type { Column } from '@tanstack/react-table';
 import { createElement, useState } from 'react';
-import { DataGridFilterFn, isDataGridFilter } from './filters/types';
+import { type DataGridFilterFn, isDataGridFilter } from './filters/types';
 
 export interface ColumnFilterProps {
   column: Column<any, unknown>;
@@ -13,7 +13,10 @@ export interface ColumnFilterProps {
 }
 
 export const DefaultColumnFilter = function ColumnFilter({ column, className, color, filterFn }: ColumnFilterProps) {
-  const [state, setState] = useSetState({ open: false, value: null as unknown });
+  const [state, setState] = useSetState({
+    open: false,
+    value: null as unknown,
+  });
 
   const handleOpen = () =>
     setState({
@@ -55,12 +58,13 @@ export const DefaultColumnFilter = function ColumnFilter({ column, className, co
       <Menu.Target>
         <ActionIcon
           size="xs"
-          children={<IconFilter size={16} />}
           onClick={handleOpen}
           className={className}
           variant={column.getIsFiltered() ? 'light' : 'transparent'}
           color={column.getIsFiltered() ? color : 'gray'}
-        />
+        >
+          <IconFilter size={16} />
+        </ActionIcon>
       </Menu.Target>
       <Menu.Dropdown>
         {!!state && (
@@ -109,5 +113,8 @@ export const ExternalColumnFilter = ({ column }: ExternalColumnFilterProps) => {
     setValue(value);
   };
 
-  return createElement(filterFn.element, { filter: value, onFilterChange: handleChange });
+  return createElement(filterFn.element, {
+    filter: value,
+    onFilterChange: handleChange,
+  });
 };

@@ -1,9 +1,13 @@
 import { TextInput } from '@mantine/core';
 import { IconFilter } from '@tabler/icons-react';
-import { createOperatorFilter, OperatorFilterOptions } from './createOperatorFilter';
-import { DataGridFilterInput, DataGridFilterOperator } from './types';
+import { type OperatorFilterOptions, createOperatorFilter } from './createOperatorFilter';
+import type { DataGridFilterInput, DataGridFilterOperator } from './types';
 
 const format = (val: string) => String(val).toLowerCase();
+
+export const createStringFilterInput: DataGridFilterInput<string> = (props) => {
+  return <StringFilterInput {...props} />;
+};
 
 export const StringFilterInput: DataGridFilterInput<string> = ({ onChange, ...rest }) => (
   <TextInput
