@@ -42,7 +42,7 @@ export function createDateFilterInput({
   withTime = false,
   format = 'DD/MM/YYYY',
   placeholder = '',
-  locale,
+  locale = 'tr',
 }: {
   withTime?: boolean;
   format?: string;
@@ -52,7 +52,7 @@ export function createDateFilterInput({
   return function DateFilterInput({ value, onChange, ...rest }) {
     if (Array.isArray(value)) {
       return (
-        <DatesProvider settings={{ locale: locale ?? 'tr' }}>
+        <DatesProvider settings={{ locale: locale }}>
           <DatePickerInput
             type="range"
             valueFormat={format}
@@ -74,7 +74,7 @@ export function createDateFilterInput({
       );
     }
     return (
-      <DatesProvider settings={{ locale: locale ?? 'tr' }}>
+      <DatesProvider settings={{ locale: locale }}>
         <DatePickerInput
           valueFormat={format}
           placeholder={placeholder}
