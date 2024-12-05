@@ -1,5 +1,5 @@
-import { createStyles, CSSObject } from '@mantine/core';
-import { PaginationMode } from './types';
+import { createStyles, type CSSObject } from '@mantine/core';
+import type { PaginationMode } from './types';
 
 export type DataGridStylesParams = {
   height?: string | number;
@@ -18,8 +18,8 @@ const ellipsis: CSSObject = {
 export default createStyles(
   (theme, { height, width, withFixedHeader, paginationMode = 'default' }: DataGridStylesParams) => ({
     wrapper: {
-      height: height ? height + 'px' : undefined,
-      width: width ? width + 'px' : undefined,
+      height: height ? `${height}px` : undefined,
+      width: width ? `${width}px` : undefined,
       overflow: 'hidden',
     },
     scrollArea: {

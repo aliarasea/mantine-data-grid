@@ -1,6 +1,6 @@
 import { ActionIcon } from '@mantine/core';
 import { IconChevronDown, IconSelector } from '@tabler/icons-react';
-import { Column } from '@tanstack/react-table';
+import type { Column } from '@tanstack/react-table';
 
 export interface ColumnSorterProps {
   column: Column<any, any>;

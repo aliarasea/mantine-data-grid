@@ -1,5 +1,5 @@
-import { DefaultProps, MantineColor, MantineNumberSize, Selectors } from '@mantine/core';
-import {
+import type { DefaultProps, MantineColor, MantineNumberSize, Selectors } from '@mantine/core';
+import type {
   Cell,
   ColumnDef,
   ColumnFiltersState,
@@ -15,12 +15,12 @@ import {
   TableOptions,
   TableState,
 } from '@tanstack/react-table';
-import { ComponentPropsWithoutRef, ComponentType, HTMLAttributes, ReactElement, ReactNode, Ref } from 'react';
-import { ColumnFilterProps } from './ColumnFilter';
-import { ColumnSorterProps } from './ColumnSorter';
-import useStyles from './DataGrid.styles';
-import { PaginationProps } from './Pagination';
-import {
+import type { ComponentPropsWithoutRef, ComponentType, HTMLAttributes, ReactElement, ReactNode, Ref } from 'react';
+import type { ColumnFilterProps } from './ColumnFilter';
+import type { ColumnSorterProps } from './ColumnSorter';
+import type useStyles from './DataGrid.styles';
+import type { PaginationProps } from './Pagination';
+import type {
   DataGridBodyCellProps,
   DataGridBodyRowProps,
   DataGridBodyWrapperProps,

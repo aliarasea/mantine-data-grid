@@ -1,5 +1,5 @@
-import { FilterFn, RowData } from '@tanstack/react-table';
-import { ComponentType } from 'react';
+import type { FilterFn, RowData } from '@tanstack/react-table';
+import type { ComponentType } from 'react';
 
 // Data Grid Filters
 export type DataGridFilterElementProps<T = unknown> = {

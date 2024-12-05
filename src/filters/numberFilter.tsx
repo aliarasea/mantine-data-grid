@@ -1,7 +1,7 @@
 import { Group, NumberInput } from '@mantine/core';
 import { IconFilter } from '@tabler/icons-react';
-import { OperatorFilterOptions, createOperatorFilter } from './createOperatorFilter';
-import { DataGridFilterInput, DataGridFilterOperator } from './types';
+import { type OperatorFilterOptions, createOperatorFilter } from './createOperatorFilter';
+import type { DataGridFilterInput, DataGridFilterOperator } from './types';
 
 type NumberFilterValue = number | [number, number];
 

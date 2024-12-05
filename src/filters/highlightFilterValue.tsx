@@ -1,6 +1,6 @@
 import { Highlight } from '@mantine/core';
-import { CellContext, RowData } from '@tanstack/react-table';
-import { DataGridFilterState } from './types';
+import type { CellContext, RowData } from '@tanstack/react-table';
+import type { DataGridFilterState } from './types';
 
 export const highlightFilterValue = <TData extends RowData>({
   renderValue,
@@ -9,7 +9,7 @@ export const highlightFilterValue = <TData extends RowData>({
 }: CellContext<TData, any>) => {
   const highlight = [];
   const filter = column.getFilterValue() as DataGridFilterState<string>;
-  if (filter && filter.value) {
+  if (filter?.value) {
     highlight.push(filter.value);
   }
 

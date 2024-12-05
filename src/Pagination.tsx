@@ -1,6 +1,6 @@
-import { Box, Group, MantineNumberSize, Pagination as MantinePagination, Select, Text } from '@mantine/core';
-import { Table } from '@tanstack/react-table';
-import { DataGridLocale, PaginationMode } from './types';
+import { Box, Group, type MantineNumberSize, Pagination as MantinePagination, Select, Text } from '@mantine/core';
+import type { Table } from '@tanstack/react-table';
+import type { DataGridLocale, PaginationMode } from './types';
 
 export const DEFAULT_PAGE_SIZES = ['10', '25', '50', '100'];
 export const DEFAULT_INITIAL_PAGE = 0;

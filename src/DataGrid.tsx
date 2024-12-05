@@ -1,11 +1,13 @@
 import { LoadingOverlay, Table as MantineTable, ScrollArea, Stack, Text } from '@mantine/core';
 import { IconBoxOff } from '@tabler/icons-react';
 import {
-  OnChangeFn,
-  Row,
-  RowData,
-  Table,
-  TableState,
+  type Cell,
+  type Header,
+  type OnChangeFn,
+  type Row,
+  type RowData,
+  type Table,
+  type TableState,
   flexRender,
   functionalUpdate,
   getCoreRowModel,
@@ -16,7 +18,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { Fragment, RefCallback, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { Fragment, type RefCallback, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { DefaultColumnFilter } from './ColumnFilter';
 import { DefaultColumnSorter } from './ColumnSorter';
 import useStyles from './DataGrid.styles';
@@ -170,13 +172,13 @@ export function DataGrid<TData extends RowData>({
 
   useEffect(() => {
     if (noFlexLayout) {
-      setTableWidth(tableSize + 'px');
+      setTableWidth(`${tableSize}px`);
     } else if (width) {
-      setTableWidth(width + 'px');
+      setTableWidth(`${width}px`);
     } else {
       setTableWidth('100%');
     }
-  }, [table, width, noFlexLayout, tableSize]);
+  }, [width, noFlexLayout, tableSize]);
 
   const handleChange = useCallback(
     function change<T extends keyof TableState>(
@@ -292,7 +294,7 @@ export function DataGrid<TData extends RowData>({
           <HeaderWrapper table={table} className={classes.thead} role="rowgroup">
             {table.getHeaderGroups().map((group) => (
               <HeaderRow key={group.id} table={table} headerGroup={group} className={classes.tr} role="row">
-                {group.headers.map((header) => (
+                {group.headers.map((header: Header<TData, unknown>) => (
                   <HeaderCell
                     key={header.id}
                     table={table}
@@ -333,6 +335,8 @@ export function DataGrid<TData extends RowData>({
                             onClick={(e) => e.stopPropagation()}
                             onMouseDown={header.getResizeHandler()}
                             onTouchStart={header.getResizeHandler()}
+                            onKeyDown={header.getResizeHandler()}
+                            onKeyUp={header.getResizeHandler()}
                           />
                         )}
                       </>
@@ -357,7 +361,7 @@ export function DataGrid<TData extends RowData>({
                       className={cx(classes.tr, rowProps.className)}
                       role="row"
                     >
-                      {row.getVisibleCells().map((cell) => {
+                      {row.getVisibleCells().map((cell: Cell<TData, unknown>) => {
                         const cellProps = onCell ? onCell(cell) : {};
                         return (
                           <BodyCell

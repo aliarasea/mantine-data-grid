@@ -1,9 +1,9 @@
 import { TextInput } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
-import { FilterFn, Table } from '@tanstack/react-table';
+import type { FilterFn, Table } from '@tanstack/react-table';
 import { isValidElement, useEffect, useState } from 'react';
 import { renderToString } from 'react-dom/server';
-import { DataGridLocale } from './types';
+import type { DataGridLocale } from './types';
 
 type GlobalFilterProps<TData> = {
   table: Table<TData>;

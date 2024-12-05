@@ -1,4 +1,4 @@
-import { DatePickerInput } from '@mantine/dates';
+import { DatePickerInput, DatesProvider } from '@mantine/dates';
 import { IconFilter } from '@tabler/icons-react';
 import dayjs, { type Dayjs } from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
@@ -11,6 +11,8 @@ const { extend } = dayjs;
 
 extend(isSameOrBefore);
 extend(isSameOrAfter);
+import 'dayjs/locale/tr';
+import 'dayjs/locale/en';
 
 type DateValue = string | null | [string | null, string | null];
 
@@ -40,15 +42,17 @@ export function createDateFilterInput({
   withTime = false,
   format = 'DD/MM/YYYY',
   placeholder = '',
+  locale,
 }: {
-  withTime: boolean;
+  withTime?: boolean;
   format?: string;
   placeholder?: string;
+  locale?: string;
 }): DataGridFilterInput<DateValue> {
   return function DateFilterInput({ value, onChange, ...rest }) {
     if (Array.isArray(value)) {
       return (
-        <>
+        <DatesProvider settings={{ locale: locale ?? 'tr' }}>
           <DatePickerInput
             type="range"
             valueFormat={format}
@@ -66,11 +70,11 @@ export function createDateFilterInput({
               }
             />
             )*/}
-        </>
+        </DatesProvider>
       );
     }
     return (
-      <>
+      <DatesProvider settings={{ locale: locale ?? 'tr' }}>
         <DatePickerInput
           valueFormat={format}
           placeholder={placeholder}
@@ -87,7 +91,7 @@ export function createDateFilterInput({
               }
             />
             )*/}
-      </>
+      </DatesProvider>
     );
   };
 }

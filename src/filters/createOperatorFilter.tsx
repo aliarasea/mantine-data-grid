@@ -9,6 +9,7 @@ import type {
 
 export type OperatorFilterOptions<TRowValue, TFilterValue> = {
   title?: string;
+  label?: string;
   placeholder?: string;
   init: (op: string, last?: TFilterValue) => TFilterValue;
   operators: DataGridFilterOperator<TRowValue, TFilterValue>[];

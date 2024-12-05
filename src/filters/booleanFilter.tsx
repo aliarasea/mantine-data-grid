@@ -1,9 +1,9 @@
 import { Radio, SegmentedControl } from '@mantine/core';
-import { createOperatorFilter, OperatorFilterOptions } from './createOperatorFilter';
-import { DataGridFilterInput, DataGridFilterOperator } from './types';
+import { type OperatorFilterOptions, createOperatorFilter } from './createOperatorFilter';
+import type { DataGridFilterInput, DataGridFilterOperator } from './types';
 
 const toValue = (value: boolean) => (value ? 'true' : 'false');
-const toState = (value: string): boolean => (value === 'true' ? true : false);
+const toState = (value: string): boolean => value === 'true';
 
 type BooleanInputOptions = {
   variant?: 'segmented' | 'radio';
@@ -36,13 +36,12 @@ export function createBooleanFilterInput({
           }}
         />
       );
-    else
-      return (
-        <Radio.Group {...rest} value={toValue(value)} onChange={(value) => onChange(toState(value))}>
-          <Radio value="true" label={trueLabel} />
-          <Radio value="false" label={falseLabel} />
-        </Radio.Group>
-      );
+    return (
+      <Radio.Group {...rest} value={toValue(value)} onChange={(value) => onChange(toState(value))}>
+        <Radio value="true" label={trueLabel} />
+        <Radio value="false" label={falseLabel} />
+      </Radio.Group>
+    );
   };
 }
 

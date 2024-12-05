@@ -1,5 +1,5 @@
 import { Checkbox } from '@mantine/core';
-import { ColumnDef, RowData } from '@tanstack/react-table';
+import type { ColumnDef, RowData } from '@tanstack/react-table';
 
 export const getRowSelectionColumn = <TData extends RowData>(): ColumnDef<TData, unknown> => ({
   id: 'select',
